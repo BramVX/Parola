@@ -9,7 +9,7 @@ import java.util.Random;
 public class ParolaController {
     String taal = "NL";
     static ArrayList<Player> players = new ArrayList<>();
-    final ArrayList<Quiz> quizzes = new ArrayList<>();
+    static ArrayList<Quiz> quizzes = new ArrayList<>();
 
     public static ParolaController getInstance() {
         Player marco = new Player("Marco", "Barion");
@@ -56,6 +56,9 @@ public class ParolaController {
                 new Answer("Vatican City"),
                 new Answer("vatican city"),
                 new Answer("Vatican city")));
+        quiz1.questions = questions1;
+        quizzes.add(quiz1);
+        quizzes.add(quiz2);
 
         ArrayList<String> gameHistory = new ArrayList<>();
         gameHistory.add("Baboom");
@@ -81,7 +84,14 @@ public class ParolaController {
             currentPlayer.payForQuiz(quiz.price);
         else return;
 
+        currentPlayer.currentQuiz = quiz;
+
         quiz.startQuiz();
+    }
+
+    public String nextQuestion(String name){
+        Player currentPlayer = getPlayer(name);
+        return currentPlayer.currentQuiz.nextQuestion();
     }
 
     public Quiz selectQuiz(ArrayList<String> history){
@@ -93,27 +103,27 @@ public class ParolaController {
         return quizzes.get(r.nextInt(quizzes.size()));
     }
 
-    public String nextQuestion(String name){
-
-        return name;
-    }
-
     public void processAnswer(String name, String answer){
-
+        Player currentPlayer = getPlayer(name);
+        currentPlayer.currentQuiz.processAnswer(answer);
     }
 
     public boolean quizFinished(String name){
-
-        return false;
+        Player player = getPlayer(name);
+        return player.currentQuiz.finished;
     }
 
     public String getLettersForRightAnswers(String name){
-
-        return name;
+        Player player = getPlayer(name);
+        String letters = "";
+        for(char c : player.currentQuiz.letters){
+            letters += c;
+        }
+        return letters;
     }
 
     public int calculateScore(String name, String word){
-
-        return 0;
+        Player player = getPlayer(name);
+        return player.currentQuiz.calculateScore(word);
     }
 }

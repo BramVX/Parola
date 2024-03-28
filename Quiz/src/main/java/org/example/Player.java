@@ -7,6 +7,7 @@ public class Player {
     String password;
     int balance;
     ArrayList<String> gameHistory;
+    Quiz currentQuiz;
 
     public Player(String name, String password) {
         this.name = name;
