@@ -39,4 +39,13 @@ public class MultipleChoice extends Question {
         answers.add(answer2);
         return answers;
     }
+
+    public ArrayList<Answer> getOptions(){
+        ArrayList<Answer> options = new ArrayList<>();
+        options.add(option1);
+        options.add(option2);
+        options.add(option3);
+        options.add(option4);
+        return options;
+    }
 }

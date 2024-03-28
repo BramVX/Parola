@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.questionTypes.MultipleChoice;
+
 import java.util.ArrayList;
 
 public class Quiz {
@@ -23,9 +25,15 @@ public class Quiz {
         if(currentQuestion == questions.size()-1){
             this.finished = true;
         }
-        String questionText = questions.get(currentQuestion).text;
+        Question question = questions.get(currentQuestion);
+        if(question instanceof MultipleChoice){
+            System.out.println("For the following question you can choose from these options.");
+            for(Answer option : ((MultipleChoice) question).getOptions()){
+                System.out.println(option.text);
+            }
+        }
         this.currentQuestion += 1;
-        return questionText;
+        return question.text;
     }
 
     public void processAnswer(String givenAnswer){
@@ -38,7 +46,10 @@ public class Quiz {
 
     public int calculateScore(String word){
         IAdapterDictionary adapterDictionary = new ExternalDictionaryAdapter();
-        //Check if woord wel die letters bevat en niet andere
+        for(char c : word.toCharArray()){
+            if(!letters.contains(c))
+                return 0;
+        }
         if(adapterDictionary.checkWord(word))
             return word.length();
         return 0;
