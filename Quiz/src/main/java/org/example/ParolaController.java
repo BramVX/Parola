@@ -86,6 +86,14 @@ public class ParolaController {
 
         currentPlayer.currentQuiz = quiz;
 
+        if(name == "Benjamin"){
+            ScoreWithTime scoreStrategy = new ScoreWithTime();
+            Timer timer = new Timer();
+            scoreStrategy.setTimer(timer);
+            currentPlayer.currentQuiz.setTimer(timer);
+            currentPlayer.currentQuiz.setScoreStrategy(scoreStrategy);
+        }
+
         quiz.startQuiz();
     }
 

@@ -11,6 +11,8 @@ public class Quiz {
     ArrayList<Question> questions;
     int currentQuestion;
     boolean finished;
+    ScoreStrategy scoreStrategy;
+    Timer timer;
 
     public Quiz(String name) {
         this.name = name;
@@ -44,14 +46,24 @@ public class Quiz {
         }
     }
 
+
     public int calculateScore(String word){
+        this.timer.stopTimer();
         IAdapterDictionary adapterDictionary = new ExternalDictionaryAdapter();
         for(char c : word.toCharArray()){
             if(!letters.contains(c))
-                return 0;
+                return scoreStrategy.calculateScore(0);
         }
         if(adapterDictionary.checkWord(word))
-            return word.length();
-        return 0;
+            return scoreStrategy.calculateScore(word.length());
+        return scoreStrategy.calculateScore(0);
+    }
+
+    public void setScoreStrategy(ScoreStrategy scoreStrategy) {
+        this.scoreStrategy = scoreStrategy;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 }
