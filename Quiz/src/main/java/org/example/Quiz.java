@@ -1,6 +1,9 @@
 package org.example;
 
+import org.example.dictionary.ExternalDictionaryAdapter;
+import org.example.dictionary.IAdapterDictionary;
 import org.example.questionTypes.MultipleChoice;
+import org.example.scoreStrategy.ScoreStrategy;
 
 import java.util.ArrayList;
 
@@ -31,17 +34,17 @@ public class Quiz {
         if(question instanceof MultipleChoice){
             System.out.println("For the following question you can choose from these options.");
             for(Answer option : ((MultipleChoice) question).getOptions()){
-                System.out.println(option.text);
+                System.out.println(option.getText());
             }
         }
         this.currentQuestion += 1;
-        return question.text;
+        return question.getText();
     }
 
     public void processAnswer(String givenAnswer){
         for(Answer actualAnswer : questions.get(currentQuestion-1).getAnswers()){
-            if(givenAnswer.equals(actualAnswer.text))
-                letters.add(actualAnswer.letter);
+            if(givenAnswer.equals(actualAnswer.getText()))
+                letters.add(actualAnswer.getLetter());
             return;
         }
     }

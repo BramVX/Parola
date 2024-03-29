@@ -1,4 +1,4 @@
-package org.example;
+package org.example.dictionary;
 
 public class ExternalDictionaryAdapter implements IAdapterDictionary{
     @Override

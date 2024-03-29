@@ -2,14 +2,15 @@ package org.example;
 
 import org.example.questionTypes.MultipleChoice;
 import org.example.questionTypes.Open;
+import org.example.scoreStrategy.ScoreWithTime;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ParolaController {
-    String taal = "NL";
-    static ArrayList<Player> players = new ArrayList<>();
-    static ArrayList<Quiz> quizzes = new ArrayList<>();
+    private String taal = "NL";
+    private static ArrayList<Player> players = new ArrayList<>();
+    private static ArrayList<Quiz> quizzes = new ArrayList<>();
 
     public static ParolaController getInstance() {
         Player marco = new Player("Marco", "Barion");
@@ -62,14 +63,14 @@ public class ParolaController {
 
         ArrayList<String> gameHistory = new ArrayList<>();
         gameHistory.add("Baboom");
-        benjamin.gameHistory = gameHistory;
+        benjamin.setGameHistory(gameHistory);
 
         return new ParolaController();
     }
 
     public Player getPlayer(String name){
         for(Player player : players){
-            if(player.name.equals(name))
+            if(player.getName().equals(name))
                 return player;
         }
         return null;
@@ -78,20 +79,20 @@ public class ParolaController {
     public void startQuiz(String name){
         Player currentPlayer = getPlayer(name);
 
-        Quiz quiz = selectQuiz(currentPlayer.gameHistory);
+        Quiz quiz = selectQuiz(currentPlayer.getGameHistory());
 
-        if(currentPlayer.balance >= quiz.price)
+        if(currentPlayer.getBalance() >= quiz.price)
             currentPlayer.payForQuiz(quiz.price);
         else return;
 
-        currentPlayer.currentQuiz = quiz;
+        currentPlayer.setCurrentQuiz(quiz);
 
         if(name == "Benjamin"){
             ScoreWithTime scoreStrategy = new ScoreWithTime();
             Timer timer = new Timer();
             scoreStrategy.setTimer(timer);
-            currentPlayer.currentQuiz.setTimer(timer);
-            currentPlayer.currentQuiz.setScoreStrategy(scoreStrategy);
+            currentPlayer.getCurrentQuiz().setTimer(timer);
+            currentPlayer.getCurrentQuiz().setScoreStrategy(scoreStrategy);
         }
 
         quiz.startQuiz();
@@ -99,7 +100,7 @@ public class ParolaController {
 
     public String nextQuestion(String name){
         Player currentPlayer = getPlayer(name);
-        return currentPlayer.currentQuiz.nextQuestion();
+        return currentPlayer.getCurrentQuiz().nextQuestion();
     }
 
     public Quiz selectQuiz(ArrayList<String> history){
@@ -113,18 +114,18 @@ public class ParolaController {
 
     public void processAnswer(String name, String answer){
         Player currentPlayer = getPlayer(name);
-        currentPlayer.currentQuiz.processAnswer(answer);
+        currentPlayer.getCurrentQuiz().processAnswer(answer);
     }
 
     public boolean quizFinished(String name){
         Player player = getPlayer(name);
-        return player.currentQuiz.finished;
+        return player.getCurrentQuiz().finished;
     }
 
     public String getLettersForRightAnswers(String name){
         Player player = getPlayer(name);
         String letters = "";
-        for(char c : player.currentQuiz.letters){
+        for(char c : player.getCurrentQuiz().letters){
             letters += c;
         }
         return letters;
@@ -132,6 +133,6 @@ public class ParolaController {
 
     public int calculateScore(String name, String word){
         Player player = getPlayer(name);
-        return player.currentQuiz.calculateScore(word);
+        return player.getCurrentQuiz().calculateScore(word);
     }
 }

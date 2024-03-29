@@ -1,4 +1,4 @@
-package org.example;
+package org.example.scoreStrategy;
 
 public class Score implements ScoreStrategy{
     @Override

@@ -3,8 +3,8 @@ package org.example;
 import java.util.Random;
 
 public class Answer {
-    String text;
-    char letter;
+    private String text;
+    private char letter;
 
     public Answer(String text) {
         this.text = text;

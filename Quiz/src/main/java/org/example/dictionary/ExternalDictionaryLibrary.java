@@ -1,4 +1,4 @@
-package org.example;
+package org.example.dictionary;
 
 public class ExternalDictionaryLibrary {
     public boolean checkWord(String word){
