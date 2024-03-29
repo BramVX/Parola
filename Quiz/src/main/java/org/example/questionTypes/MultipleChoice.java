@@ -7,12 +7,12 @@ import org.example.Question;
 import java.util.ArrayList;
 
 public class MultipleChoice extends Question {
-    Answer option1;
-    Answer option2;
-    Answer option3;
-    Answer option4;
-    Answer answer1;
-    Answer answer2;
+    private Answer option1;
+    private Answer option2;
+    private Answer option3;
+    private Answer option4;
+    private Answer answer1;
+    private Answer answer2;
 
     public MultipleChoice(String text, Category category, Answer option1, Answer option2, Answer option3, Answer option4, Answer answer1) {
         super(text, category);

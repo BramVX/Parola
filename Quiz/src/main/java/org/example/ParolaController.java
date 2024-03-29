@@ -57,7 +57,7 @@ public class ParolaController {
                 new Answer("Vatican City"),
                 new Answer("vatican city"),
                 new Answer("Vatican city")));
-        quiz1.questions = questions1;
+        quiz1.setQuestions(questions1);
         quizzes.add(quiz1);
         quizzes.add(quiz2);
 
@@ -105,7 +105,7 @@ public class ParolaController {
 
     public Quiz selectQuiz(ArrayList<String> history){
         for(Quiz quiz : quizzes){
-            if(!history.contains(quiz.name))
+            if(!history.contains(quiz.getName()))
                 return quiz;
         }
         Random r = new Random();
@@ -119,13 +119,13 @@ public class ParolaController {
 
     public boolean quizFinished(String name){
         Player player = getPlayer(name);
-        return player.getCurrentQuiz().finished;
+        return player.getCurrentQuiz().isFinished();
     }
 
     public String getLettersForRightAnswers(String name){
         Player player = getPlayer(name);
         String letters = "";
-        for(char c : player.getCurrentQuiz().letters){
+        for(char c : player.getCurrentQuiz().getLetters()){
             letters += c;
         }
         return letters;

@@ -7,10 +7,10 @@ import org.example.Question;
 import java.util.ArrayList;
 
 public class Open extends Question {
-    Answer answer1;
-    Answer answer2;
-    Answer answer3;
-    Answer answer4;
+    private Answer answer1;
+    private Answer answer2;
+    private Answer answer3;
+    private Answer answer4;
 
     public Open(String text, Category category, Answer answer1, Answer answer2, Answer answer3, Answer answer4) {
         super(text, category);

@@ -8,14 +8,14 @@ import org.example.scoreStrategy.ScoreStrategy;
 import java.util.ArrayList;
 
 public class Quiz {
-    String name;
+    private String name;
     final int price = 40;
-    ArrayList<Character> letters = new ArrayList<>();
-    ArrayList<Question> questions;
-    int currentQuestion;
-    boolean finished;
-    ScoreStrategy scoreStrategy;
-    Timer timer;
+    private ArrayList<Character> letters = new ArrayList<>();
+    private ArrayList<Question> questions;
+    private int currentQuestion;
+    private boolean finished;
+    private ScoreStrategy scoreStrategy;
+    private Timer timer;
 
     public Quiz(String name) {
         this.name = name;
@@ -55,11 +55,11 @@ public class Quiz {
         IAdapterDictionary adapterDictionary = new ExternalDictionaryAdapter();
         for(char c : word.toCharArray()){
             if(!letters.contains(c))
-                return scoreStrategy.calculateScore(0);
+                return scoreStrategy.calculateScore(0, letters.size());
         }
         if(adapterDictionary.checkWord(word))
-            return scoreStrategy.calculateScore(word.length());
-        return scoreStrategy.calculateScore(0);
+            return scoreStrategy.calculateScore(word.length(), letters.size());
+        return scoreStrategy.calculateScore(0, letters.size());
     }
 
     public void setScoreStrategy(ScoreStrategy scoreStrategy) {
@@ -68,5 +68,21 @@ public class Quiz {
 
     public void setTimer(Timer timer) {
         this.timer = timer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Character> getLetters() {
+        return letters;
+    }
+
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }
