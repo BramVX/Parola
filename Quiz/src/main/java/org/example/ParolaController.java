@@ -91,6 +91,7 @@ public class ParolaController {
             ScoreWithTime scoreStrategy = new ScoreWithTime();
             Timer timer = new Timer();
             scoreStrategy.setTimer(timer);
+            timer.startTimer();
             currentPlayer.getCurrentQuiz().setTimer(timer);
             currentPlayer.getCurrentQuiz().setScoreStrategy(scoreStrategy);
         }
