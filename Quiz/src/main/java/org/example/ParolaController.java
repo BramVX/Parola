@@ -79,9 +79,13 @@ public class ParolaController {
     public void startQuiz(String name){
         Player currentPlayer = getPlayer(name);
 
-        Quiz quiz = selectQuiz(currentPlayer.getGameHistory());
+        Arraylist<String> gameHistory = currentPlayer.getGameHistory();
 
-        if(currentPlayer.getBalance() >= quiz.price)
+        Quiz quiz = selectQuiz(gameHistory);
+
+        int balance = currentPlayer.getBalance();
+
+        if(balance >= quiz.price)
             currentPlayer.payForQuiz(quiz.price);
         else return;
 
@@ -92,8 +96,8 @@ public class ParolaController {
             Timer timer = new Timer();
             scoreStrategy.setTimer(timer);
             timer.startTimer();
-            currentPlayer.getCurrentQuiz().setTimer(timer);
-            currentPlayer.getCurrentQuiz().setScoreStrategy(scoreStrategy);
+            quiz.setTimer(timer);
+            quiz.setScoreStrategy(scoreStrategy);
         }
 
         quiz.startQuiz();
@@ -115,7 +119,8 @@ public class ParolaController {
 
     public void processAnswer(String name, String answer){
         Player currentPlayer = getPlayer(name);
-        currentPlayer.getCurrentQuiz().processAnswer(answer);
+        Quiz quiz = currentPlayer.getCurrentQuiz();
+        quiz.processAnswer(answer);
     }
 
     public boolean quizFinished(String name){
